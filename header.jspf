@@ -1,0 +1,37 @@
+<%@ page contentType="text/html; charset=utf-8" language="java"%>
+<%@ page import="com.quarkioe.vehicle.bl.BLUserx"%>
+<%@ page import="com.quarkioe.vehicle.schema.UserxSchema"%>
+<%
+	UserxSchema suser = null;
+	String slogined = "false";
+	if(request.getSession(false)!=null&&session.getAttribute("ID")!=null)
+	{
+		slogined="true";//若登录则显示用户Namex
+		BLUserx sblUserx=new BLUserx(con);
+		suser=sblUserx.getSchema((Integer)(session.getAttribute("ID")));
+%>
+<header id="header">
+    <a href="#" class="logo"><strong>基本立子（北京）科技发展有限公司</strong></a>
+    <ul class="icons">
+        <li style="<%=slogined=="true"?"display:static":"display:none"%>">
+        	<span style="color: #f56a6a;" class="logo"><%=suser.Namex%></span>
+        	&nbsp;&nbsp;&nbsp;&nbsp;
+        </li>
+    </ul>
+</header>
+<%
+	}
+	else
+	{
+%>
+<header id="header">
+    <a href="#" class="logo"><strong>基本立子（北京）科技发展有限公司</strong></a>
+    <ul class="icons">
+        <li style="<%=slogined=="false"?"display:static":"display:none"%>">
+        	<a style="color: #f56a6a;" href="login.jsp"><span class="label">登录/注册</span></a>
+        </li>
+    </ul>
+</header>
+<%
+	}
+%>

@@ -1,0 +1,6 @@
+<Context path="/vehicle" docBase="vehicle"  debug="5" reloadable="true" crossContext="true">
+    <Resource name="jdbc/vehicle" auth="Container" type="javax.sql.DataSource"
+    maxActive="500" maxIdle="200" maxWait="10000"
+    username="postgres" password="postgres" driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://localhost:5432/vehicle?autoReconnect=true"/>
+</Context>

@@ -1,0 +1,126 @@
+<%@ page contentType="text/html; charset=utf-8" language="java"%>
+<%@ page import="com.quarkioe.vehicle.bl.BLUserx"%>
+<%@ page import="com.quarkioe.vehicle.schema.UserxSchema"%>
+<%@ page import="com.quarkioe.vehicle.bl.BLCompany"%>
+<%@ page import="com.quarkioe.vehicle.schema.CompanySchema"%>
+<%@ page import="java.util.List"%>
+<%
+	String logined="false";
+	String rootUser="true";
+	String companyUser="false";
+	String companyParentUser = "false";
+	Boolean isPatrol=true;
+
+	if(request.getSession(false)!=null&&session.getAttribute("ID")!=null)
+	{
+		logined="true";//若已登录则显示菜单
+		BLUserx sblUserx=new BLUserx(con);
+		BLCompany sblCompany = new BLCompany(con);
+
+		UserxSchema suserxSchema=sblUserx.getSchema((Integer)(session.getAttribute("ID")));
+		if(suserxSchema.CompanyID==0)
+		{
+			rootUser="true";
+		}
+		else
+		{
+			rootUser="false";
+			CompanySchema scompanySchema = sblCompany.getSchema(suserxSchema.CompanyID);
+			if(scompanySchema.ParentID==0)
+			{
+				companyParentUser = "true";
+			}
+			else
+				companyUser="true";
+		}
+	}
+%>
+<div id="sidebar">
+	<div class="inner">
+		<!-- Search -->
+		<!--
+			<section id="search" class="alt">
+				<form method="post" action="#">
+					<input type="text" name="query" id="query" placeholder="Search" />
+				</form>
+			</section>
+		-->
+
+		<!-- Menu -->
+			<nav id="menu">
+				<header class="major">
+					<h2>车辆代维系统</h2>
+				</header>
+				<ul style="<%=logined=="true"?"display:static":"display:none"%>">
+					<li>
+					    <li style=""><a href="index.jsp">首页</a></li>
+					    <li style=""><a href="vehicle.jsp">车辆管理</a></li>
+					    <li style=""><a href="driver.jsp">驾驶员管理</a></li>
+						<li style=""><a href="driveInformation.jsp">单车行车信息</a></li>
+						<li style=""><a href="fleetDriveInformation.jsp">车队行车信息</a></li>
+						<li style=""><a href="area.jsp">电子围栏设置</a></li>
+						<li style=""><a href="userGroupInto.jsp">用户组管理</a></li>
+						<li style="<%=companyParentUser=="true"?"display:static":"display:none"%>">
+					    	<a href="companySelfInfo.jsp">公司详细信息</a>
+					    </li>
+					    <li style="<%=companyUser=="true"?"display:static":"display:none"%>">
+					    	<a href="company.jsp">公司详细信息</a>
+					    </li>
+					    <li style="<%=rootUser=="true"?"display:static":"display:none"%>">
+					    	<a href="company.jsp">公司列表</a></li>
+					    <li style="<%=companyParentUser=="true"?"display:static":"display:none"%>">
+					    	<a href="company.jsp">子公司</a>
+					    </li>
+					    <li style=""><a href="systemLog.jsp">系统日志</a></li>
+					    <li style=""><a href="user.jsp">用户</a></li>
+					    <li style=""><a href="updatePassword.jsp">修改密码</a></li>
+					    <li style=""><a href="logout.jsp">注销</a></li>
+					</li>
+				</ul>
+			</nav>
+
+		<!-- Section -->
+		<!--
+			<section>
+				<header class="major">
+					<h2>Ante interdum</h2>
+				</header>
+				<div class="mini-posts">
+					<article>
+						<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+						<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+					</article>
+					<article>
+						<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+						<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+					</article>
+					<article>
+						<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+						<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+					</article>
+				</div>
+				<ul class="actions">
+					<li><a href="#" class="button">More</a></li>
+				</ul>
+			</section>
+		-->
+		<!-- Section -->
+			<section>
+				<header class="major">
+					<h2>联系我们</h2>
+				</header>
+				<!--<p></p>-->
+				<ul class="contact">
+					<li class="fa-envelope-o"><a href="mailto:support@quarkioe.com">support@quarkioe.com</a></li>
+					<li class="fa-phone">010-64472529</li>
+					<li class="fa-home">北京市朝阳区来广营中街甲一号朝来高科技产业园15号楼5层</li>
+				</ul>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<p class="copyright">&copy; 2017 基本立子 版权所有</p>
+			</footer>
+
+	</div>
+</div>

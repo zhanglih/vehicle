@@ -1,0 +1,12 @@
+<%@ page import="java.sql.*"%>
+<%@ page import="javax.sql.*"%>
+<%@ page import="javax.naming.*"%>
+<%
+	ServletContext context_openCon=this.getServletContext();
+	String dbcp_openCon=context_openCon.getInitParameter("DBCP");
+
+	Context initCtx = new InitialContext();
+	Context envCtx =(Context) initCtx.lookup("java:comp/env");
+	DataSource ds =(DataSource)envCtx.lookup(dbcp_openCon);
+	Connection con =ds.getConnection();
+%>
